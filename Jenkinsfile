@@ -3,26 +3,17 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
-                withMaven(maven : 'maven_3.5.4')
-				{
-					sh 'mvn clean build'
-				}
+               sh 'make'
             }
         }
         stage('Test'){
              steps { 
-                withMaven(maven : 'maven_3.5.4')
-				{
-					sh 'mvn test'
-				}
+                sh 'make check'
             }
         }
         stage('Deploy') {
              steps { 
-                withMaven(maven : 'maven_3.5.4')
-				{
-					sh 'mvn deploy'
-				}
+              sh 'make publish'
             }
         }
     }
