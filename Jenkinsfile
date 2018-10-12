@@ -1,20 +1,28 @@
-pipeline {
+pipeline { 
     agent any 
     stages {
-       stage('Build') { 
+        stage('Build') { 
             steps { 
-                sh 'make' 
+                withMaven(maven : 'maven_3.5.4')
+				{
+					sh 'mvn clean build'
+				}
             }
         }
         stage('Test'){
-            steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+             steps { 
+                withMaven(maven : 'maven_3.5.4')
+				{
+					sh 'mvn test'
+				}
             }
         }
         stage('Deploy') {
-            steps {
-                sh 'make publish'
+             steps { 
+                withMaven(maven : 'maven_3.5.4')
+				{
+					sh 'mvn deploy'
+				}
             }
         }
     }
